@@ -4,15 +4,9 @@ import Header from './components/Header';
 import Categories from './components/Categories';
 import Sort from './components/Sort';
 import PizzaBlock from './components/PizzaBlock';
+import { pizzas } from './mock';
 
 const App = () => {
-  const [pizzas, setPizzas] = React.useState([
-    { name: 'Мексиканская пицца', price: 390 },
-    { name: 'Итальянская пицца', price: 510 },
-    { name: 'Американская пицца', price: 470 },
-    { name: 'Русская пицца', price: 490 },
-  ]);
-
   return (
     <div className="wrapper">
       <Header />

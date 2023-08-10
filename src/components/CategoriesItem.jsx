@@ -1,8 +1,8 @@
 import React from 'react';
 
-const CategoriesItem = ({ name, value, activeIndex, clickHandler }) => {
+const CategoriesItem = ({ name, activeIndex, clickHandler }) => {
   return (
-    <li className={activeIndex === value ? 'active' : ''} onClick={() => clickHandler(value)}>
+    <li className={activeIndex === name ? 'active' : ''} onClick={() => clickHandler(name)}>
       {name}
     </li>
   );

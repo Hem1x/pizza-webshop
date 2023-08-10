@@ -17,7 +17,6 @@ const Categories = () => {
           <CategoriesItem
             key={category}
             name={category}
-            value={category}
             clickHandler={clickHandler}
             activeIndex={activeCategory}
           />
