@@ -1,5 +1,35 @@
 import React from 'react';
 
+const SizeSelector = ({ pizza, pizzaState, setPizzaState }) => {
+  return (
+    <ul>
+      {pizza.sizes.map((size) => (
+        <li
+          key={size}
+          className={pizzaState.size === size ? 'active' : ''}
+          onClick={() => setPizzaState({ ...pizzaState, size })}>
+          {size} см.
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const TypeSelector = ({ pizza, pizzaState, setPizzaState, typeName }) => {
+  return (
+    <ul>
+      {pizza.types.map((type) => (
+        <li
+          key={type}
+          className={pizzaState.type === type ? 'active' : ''}
+          onClick={() => setPizzaState({ ...pizzaState, type })}>
+          {typeName[type]}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 const PizzaBlock = ({ pizza }) => {
   const [pizzaState, setPizzaState] = React.useState({
     type: pizza.types[0],
@@ -13,26 +43,17 @@ const PizzaBlock = ({ pizza }) => {
       <img className="pizza-block__image" src={pizza.imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{pizza.title}</h4>
       <div className="pizza-block__selector">
-        <ul>
-          {pizza.types.map((type) => (
-            <li
-              className={pizzaState.type === type ? 'active' : ''}
-              key={type}
-              onClick={() => setPizzaState({ ...pizzaState, type })}>
-              {typeName[type]}
-            </li>
-          ))}
-        </ul>
-        <ul>
-          {pizza.sizes.map((size) => (
-            <li
-              className={pizzaState.size === size ? 'active' : ''}
-              key={size}
-              onClick={() => setPizzaState({ ...pizzaState, size })}>
-              {size} см.
-            </li>
-          ))}
-        </ul>
+        <SizeSelector
+          pizza={pizza}
+          pizzaState={pizzaState}
+          setPizzaState={setPizzaState}
+        />
+        <TypeSelector
+          pizza={pizza}
+          pizzaState={pizzaState}
+          setPizzaState={setPizzaState}
+          typeName={typeName}
+        />
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {pizza.price} ₽</div>
