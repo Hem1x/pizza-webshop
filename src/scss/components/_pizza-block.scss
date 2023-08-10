@@ -7,6 +7,10 @@
 
   &:not(:nth-of-type(4n)) {
     margin-right: 35px;
+
+    @media (max-width: 652px) {
+      margin-right: 0;
+    }
   }
 
   &__image {
