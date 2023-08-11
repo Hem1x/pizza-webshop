@@ -10,3 +10,15 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0); /*Цвет скролла*/
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fe8f1e; /*Цвет ползунка*/
+}
+
+::-webkit-scrollbar {
+  width: 6px; /*Толщина скролла*/
+}

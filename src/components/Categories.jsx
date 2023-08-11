@@ -1,25 +1,17 @@
-import React, { useState } from 'react';
-import CategoriesItem from './CategoriesItem';
+import React from 'react';
 
-const Categories = () => {
-  const [activeCategory, setActiveCategory] = useState('Все');
-
-  const categories = ['Все', 'Мясо', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
-
-  const clickHandler = (value) => {
-    setActiveCategory(value);
-  };
+const Categories = ({ selectedCategory, onClickCategory }) => {
+  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
 
   return (
     <div className="categories">
       <ul>
-        {categories.map((category) => (
-          <CategoriesItem
-            key={category}
-            name={category}
-            clickHandler={clickHandler}
-            activeIndex={activeCategory}
-          />
+        {categories.map((category, i) => (
+          <li
+            className={selectedCategory === i ? 'active' : ''}
+            onClick={() => onClickCategory(i)}>
+            {category}
+          </li>
         ))}
       </ul>
     </div>
