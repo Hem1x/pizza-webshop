@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 
-const Sort = ({ selectedSort, onClickSort }) => {
+const Sort = ({ selectedSort, onClickSort, sortTypeList }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const sortList = [
-    'популярности',
-    'алфавиту (А-Я)',
-    'цене (сначала дешёвые)',
-    'цене (сначала дорогие)',
-  ];
 
   const clickHandler = (index) => {
     onClickSort(index);
@@ -19,17 +12,17 @@ const Sort = ({ selectedSort, onClickSort }) => {
     <div className="sort">
       <div className="sort__label">
         <b>Сортировка по:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sortList[selectedSort]}</span>
+        <span onClick={() => setIsOpen(!isOpen)}>{sortTypeList[selectedSort].name}</span>
       </div>
       {isOpen && (
         <div className="sort__popup">
           <ul>
-            {sortList.map((sort, i) => (
+            {sortTypeList.map((sort, i) => (
               <li
-                key={sort}
+                key={sort.name}
                 className={selectedSort === i ? 'active' : ''}
                 onClick={() => clickHandler(i)}>
-                {sort}
+                {sort.name}
               </li>
             ))}
           </ul>

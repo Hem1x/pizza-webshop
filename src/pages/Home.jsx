@@ -13,16 +13,16 @@ const Home = () => {
 
   // Sort
   const sortTypeList = [
-    'rating&order=desc',
-    'title&order=asc',
-    'price&order=asc',
-    'price&order=desc',
+    { name: 'популярности', sortProperty: 'rating&order=desc' },
+    { name: 'алфавиту (А-Я)', sortProperty: 'title&order=asc' },
+    { name: 'цене (сначала дешёвые)', sortProperty: 'price&order=asc' },
+    { name: 'цене (сначала дорогие)', sortProperty: 'price&order=desc' },
   ];
   const [sortType, setSortType] = useState(0);
 
   // URL Parameters
   const categoryURL = categoryId !== 0 ? `category=${categoryId}&` : '';
-  const sortURL = `sortBy=${sortTypeList[sortType]}`;
+  const sortURL = `sortBy=${sortTypeList[sortType].sortProperty}`;
 
   useEffect(() => {
     try {
@@ -43,7 +43,11 @@ const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories selectedCategory={categoryId} onClickCategory={setCategoryId} />
-        <Sort selectedSort={sortType} onClickSort={setSortType} />
+        <Sort
+          selectedSort={sortType}
+          onClickSort={setSortType}
+          sortTypeList={sortTypeList}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
