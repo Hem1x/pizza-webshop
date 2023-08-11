@@ -17,6 +17,10 @@
   font-size: 16px;
   transition: all 0.15s ease-in-out;
 
+  @media (max-width: 688px) {
+    width: 100%;
+  }
+
   &:focus {
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
