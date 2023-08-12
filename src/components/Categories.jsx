@@ -1,10 +1,13 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
-const Categories = ({ selectedCategory, onClickCategory, setCurrentPage }) => {
+const Categories = ({ selectedCategory, setCurrentPage }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
+  const dispatch = useDispatch();
 
   const clickHandler = (i) => {
-    onClickCategory(i);
+    dispatch(setCategoryId(i));
     setCurrentPage(1);
   };
 
