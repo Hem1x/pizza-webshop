@@ -1,9 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { SearchContext } from '../../App';
 import s from './Search.module.scss';
 
 const Search = () => {
   const { searchValue, setSearchValue } = useContext(SearchContext);
+  const inputRef = useRef();
+
+  const onCLickClear = () => {
+    setSearchValue('');
+    inputRef.current.focus();
+  };
 
   return (
     <div className={s.root}>
@@ -21,6 +27,7 @@ const Search = () => {
         />
       </svg>
       <input
+        ref={inputRef}
         className={s.input}
         type="text"
         placeholder="Поиск пиццы..."
@@ -29,7 +36,7 @@ const Search = () => {
       />
       {searchValue.length !== 0 && (
         <svg
-          onClick={() => setSearchValue('')}
+          onClick={onCLickClear}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

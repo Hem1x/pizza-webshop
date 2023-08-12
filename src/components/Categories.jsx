@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setCategoryId } from '../redux/slices/filterSlice';
+import { setCategoryId, setPageCount } from '../redux/slices/filterSlice';
 
 const Categories = ({ selectedCategory, setCurrentPage }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
@@ -8,7 +8,7 @@ const Categories = ({ selectedCategory, setCurrentPage }) => {
 
   const clickHandler = (i) => {
     dispatch(setCategoryId(i));
-    setCurrentPage(1);
+    dispatch(setPageCount(1));
   };
 
   return (
