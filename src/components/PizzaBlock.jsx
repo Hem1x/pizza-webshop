@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../redux/slices/cartSlice';
 
 const SizeSelector = ({ pizza, pizzaState, setPizzaState }) => {
   return (
@@ -38,6 +40,24 @@ const PizzaBlock = ({ pizza }) => {
 
   const typeName = ['тонкое', 'традиционное'];
 
+  const dispatch = useDispatch();
+  const addedCount = useSelector((state) =>
+    state.cart.items.find((obj) => obj.id === pizza.id),
+  );
+
+  const onClickAdd = () => {
+    const item = {
+      id: pizza.id,
+      title: pizza.title,
+      price: pizza.price,
+      imageUrl: pizza.imageUrl,
+      type: typeName[pizzaState.type],
+      size: pizzaState.size,
+    };
+
+    dispatch(addItem(item));
+  };
+
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
@@ -58,7 +78,7 @@ const PizzaBlock = ({ pizza }) => {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {pizza.price} ₽</div>
-          <button className="button button--outline button--add">
+          <button className="button button--outline button--add" onClick={onClickAdd}>
             <svg
               width="12"
               height="12"
@@ -71,7 +91,7 @@ const PizzaBlock = ({ pizza }) => {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
+            {addedCount !== undefined && <i>{addedCount.count}</i>}
           </button>
         </div>
       </div>
