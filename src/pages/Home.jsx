@@ -12,6 +12,7 @@ import Pagination from '../components/Pagination/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '../hooks/debounce';
 import { setFilters, setPageCount } from '../redux/slices/filterSlice';
+import { getPizzas } from '../redux/slices/pizzaSlice';
 
 const Home = ({ searchValue }) => {
   const dispatch = useDispatch();
@@ -22,27 +23,33 @@ const Home = ({ searchValue }) => {
   const debounced = useDebounce(searchValue, 500);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [pizzas, setPizzas] = useState([]);
+  const { categoryId, sort, pageCount } = useSelector((state) => state.filter);
+  const { pizzas, status } = useSelector((state) => state.pizza);
 
-  const { categoryId, sort } = useSelector((state) => state.filter);
-  const currentPage = useSelector((state) => state.filter.pageCount);
-
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
     const categoryURL = categoryId !== 0 ? `category=${categoryId}&` : '';
     const sortURL = `sortBy=${sort.sortProperty.replace('-', '')}${
       sort.sortProperty.startsWith('-') ? '&order=asc' : '&order=desc'
     }`;
     const searchURL = debounced ? `search=${debounced}` : '';
-    const pageURL = categoryId === 0 ? `page=${currentPage}` : '';
-    axios
-      .get(
-        `https://64b519e9f3dbab5a95c6b423.mockapi.io/pizza?${pageURL}&limit=4&${categoryURL}${sortURL}&${searchURL}`,
-      )
-      .then((response) => {
-        setPizzas(response.data);
-        setIsLoading(false);
-      });
+    const pageURL = categoryId === 0 ? `page=${pageCount}` : '';
+
+    try {
+      dispatch(
+        getPizzas({
+          categoryURL,
+          sortURL,
+          searchURL,
+          pageURL,
+        }),
+      );
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+
     window.scrollTo(0, 0);
   };
 
@@ -63,20 +70,20 @@ const Home = ({ searchValue }) => {
     }
 
     isSearch.current = false;
-  }, [debounced, categoryId, sort.sortProperty, currentPage]);
+  }, [debounced, categoryId, sort.sortProperty, pageCount]);
 
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
         sortProperty: sort.sortProperty,
         categoryId,
-        currentPage,
+        pageCount,
       });
 
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [debounced, categoryId, sort.sortProperty, currentPage]);
+  }, [debounced, categoryId, sort.sortProperty, pageCount]);
 
   const skeletons = [...new Array(8)].map((item, i) => <PizzaLoaderBlock key={i} />);
   const pizzasList = pizzas.map((pizza) => <PizzaBlock key={pizza.id} pizza={pizza} />);
@@ -94,14 +101,20 @@ const Home = ({ searchValue }) => {
       )}
 
       <div className="content__items">
-        {isLoading && skeletons}
-        {pizzasList.length > 0 && pizzasList}
+        {status === 'loading' && skeletons}
+        {status === 'success' && pizzasList}
       </div>
 
-      {pizzasList.length === 0 && (
+      {status === 'error' && (
         <h3 style={{ display: 'flex', justifyContent: 'center', margin: '4rem' }}>
-          У нас нет пиццы по вашему запросу "{searchValue}"
+          Произошла ошибка. Питса отсутствует. 😓
         </h3>
+      )}
+
+      {status === 'success' && pizzasList.length === 0 && (
+        <h2 style={{ display: 'flex', justifyContent: 'center', margin: '4rem' }}>
+          Мы не нашли такой пиццы 😓
+        </h2>
       )}
     </div>
   );
