@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort, { sortTypeList } from '../components/Sort';
@@ -8,37 +8,38 @@ import PizzaLoaderBlock from '../components/PizzaLoaderBlock';
 import PizzaBlock from '../components/PizzaBlock';
 import Pagination from '../components/Pagination/Pagination';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '../hooks/debounce';
-import { selectFilter, setFilters, setPageCount } from '../redux/slices/filterSlice';
+import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import { getPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
+import { IUrl, Ipizza } from 'types';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 
-const Home = () => {
-  const dispatch = useDispatch();
+const Home: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-  const { searchValue } = useSelector((state) => state.filter);
+
+  const { pizzas, status } = useAppSelector(selectPizzas);
+  const { searchValue } = useAppSelector((state) => state.filter);
+  const { categoryId, sort, pageCount } = useAppSelector(selectFilter);
 
   const debounced = useDebounce(searchValue, 500);
 
-  const { categoryId, sort, pageCount } = useSelector(selectFilter);
-  const { pizzas, status } = useSelector(selectPizzas);
+  const urlParams: IUrl = {
+    categoryURL: categoryId !== 0 ? `category=${categoryId}&` : '',
+    sortURL: `sortBy=${sort.sortProperty.replace('-', '')}${
+      sort.sortProperty.startsWith('-') ? '&order=asc' : '&order=desc'
+    }`,
+    searchURL: debounced ? `search=${debounced}` : '',
+    pageURL: categoryId === 0 ? `page=${pageCount}` : '',
+  };
 
   const fetchPizzas = async () => {
     try {
-      dispatch(
-        getPizzas({
-          categoryURL: categoryId !== 0 ? `category=${categoryId}&` : '',
-          sortURL: `sortBy=${sort.sortProperty.replace('-', '')}${
-            sort.sortProperty.startsWith('-') ? '&order=asc' : '&order=desc'
-          }`,
-          searchURL: debounced ? `search=${debounced}` : '',
-          pageURL: categoryId === 0 ? `page=${pageCount}` : '',
-        }),
-      );
+      dispatch(getPizzas(urlParams));
     } catch (error) {
-      console.log(error.message);
+      console.log((error as Error).message);
     }
 
     window.scrollTo(0, 0);
@@ -47,11 +48,13 @@ const Home = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      const sort = sortTypeList.find((obj) => obj.sortProperty === params.sortProperty);
+      const sortProperty = params.sortProperty as string | undefined;
+      const sort = sortTypeList.find((obj) => obj.sortProperty === sortProperty);
 
-      dispatch(setFilters({ ...params, sort }));
-
-      isSearch.current = true;
+      if (sort) {
+        dispatch(setFilters({ ...params, sort }));
+        isSearch.current = true;
+      }
     }
   }, [dispatch]);
 
@@ -61,12 +64,12 @@ const Home = () => {
     }
 
     isSearch.current = false;
-  }, [debounced, categoryId, sort.sortProperty, pageCount]);
+  }, [debounced, categoryId, sort?.sortProperty, pageCount]);
 
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
-        sort: sort.sortProperty,
+        sort: sort?.sortProperty,
         category: categoryId,
         page: pageCount,
       });
@@ -77,7 +80,9 @@ const Home = () => {
   }, [debounced, categoryId, sort.sortProperty, pageCount, navigate]);
 
   const skeletons = [...new Array(8)].map((item, i) => <PizzaLoaderBlock key={i} />);
-  const pizzasList = pizzas.map((pizza) => <PizzaBlock key={pizza.id} pizza={pizza} />);
+  const pizzasList = pizzas.map((pizza: Ipizza) => (
+    <PizzaBlock key={pizza.id} pizza={pizza} />
+  ));
 
   return (
     <div className="container">
@@ -87,9 +92,7 @@ const Home = () => {
       </div>
 
       <h2 className="content__title">Все пиццы</h2>
-      {categoryId === 0 && pizzas.length > 3 && (
-        <Pagination onChangePage={(number) => dispatch(setPageCount(number))} />
-      )}
+      {categoryId === 0 && <Pagination />}
 
       <div className="content__items">
         {status === 'loading' && skeletons}

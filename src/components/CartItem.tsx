@@ -1,23 +1,28 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { addItem, decreaseAmount, removeItem } from '../redux/slices/cartSlice';
+import { useAppDispatch } from 'redux/hooks';
+import { ICartItem } from 'types';
 
-const CartItem = ({ cartItem }) => {
-  const dispatch = useDispatch();
+interface CartItemProps {
+  cartItem: ICartItem;
+}
+
+const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
+  const dispatch = useAppDispatch();
   return (
-    <div class="cart__item">
-      <div class="cart__item-img">
-        <img class="pizza-block__image" src={cartItem.imageUrl} alt="Pizza" />
+    <div className="cart__item">
+      <div className="cart__item-img">
+        <img className="pizza-block__image" src={cartItem.imageUrl} alt="Pizza" />
       </div>
-      <div class="cart__item-info">
+      <div className="cart__item-info">
         <h3>{cartItem.title}</h3>
         <p>
           {cartItem.type}, {cartItem.size} см.
         </p>
       </div>
-      <div class="cart__item-count">
+      <div className="cart__item-count">
         <div
-          class="button button--outline button--circle cart__item-count-minus"
+          className="button button--outline button--circle cart__item-count-minus"
           onClick={() => dispatch(decreaseAmount(cartItem.id))}>
           <svg
             width="10"
@@ -37,7 +42,7 @@ const CartItem = ({ cartItem }) => {
         </div>
         <b>{cartItem.count}</b>
         <div
-          class="button button--outline button--circle cart__item-count-plus"
+          className="button button--outline button--circle cart__item-count-plus"
           onClick={() => dispatch(addItem(cartItem))}>
           <svg
             width="10"
@@ -56,17 +61,20 @@ const CartItem = ({ cartItem }) => {
           </svg>
         </div>
       </div>
-      <div class="cart__item-price">
-        <b>{cartItem.price * cartItem.count} ₽</b>
+      <div className="cart__item-price">
+        <b>{cartItem.price * (cartItem.count || 0)} ₽</b>
       </div>
       <div
-        class="cart__item-remove"
+        className="cart__item-remove"
         onClick={() =>
           dispatch(
-            removeItem({ id: cartItem.id, price: cartItem.price * cartItem.count }),
+            removeItem({
+              id: cartItem.id,
+              price: cartItem.price * (cartItem.count || 0),
+            }),
           )
         }>
-        <div class="button button--outline button--circle">
+        <div className="button button--outline button--circle">
           <svg
             width="10"
             height="10"

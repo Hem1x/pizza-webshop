@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
+import { useAppDispatch } from 'redux/hooks';
 
 export const sortTypeList = [
   { name: 'популярности', sortProperty: 'rating' },
@@ -9,18 +9,27 @@ export const sortTypeList = [
   { name: 'цене (сначала дешёвые)', sortProperty: '-price' },
 ];
 
-const Sort = ({ sortType }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
-  const sortRef = useRef();
+interface ISort {
+  name: string;
+  sortProperty: string;
+}
 
-  const clickHandler = (sort) => {
+interface SortProps {
+  sortType: ISort;
+}
+
+const Sort: React.FC<SortProps> = ({ sortType }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useAppDispatch();
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  const clickHandler = (sort: ISort) => {
     dispatch(setSort({ name: sort.name, sortProperty: sort.sortProperty }));
     setIsOpen(false);
   };
 
   useEffect(() => {
-    const hadleClickOutsite = (e) => {
+    const hadleClickOutsite = (e: any) => {
       if (!e.composedPath().includes(sortRef.current)) {
         setIsOpen(false);
       }

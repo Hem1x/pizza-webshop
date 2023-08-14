@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import FullPizza from './pages/FullPizza';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <div className="wrapper">
       <Header />

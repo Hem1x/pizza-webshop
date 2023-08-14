@@ -2,8 +2,22 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, selectCartById } from '../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
+import { Ipizza } from 'types';
 
-const SizeSelector = ({ pizza, pizzaState, setPizzaState }) => {
+interface SizeSelectorProps {
+  pizza: Ipizza;
+  pizzaState: {
+    type: number;
+    size: number;
+  };
+  setPizzaState: (update: { type: number; size: number }) => void;
+}
+
+const SizeSelector: React.FC<SizeSelectorProps> = ({
+  pizza,
+  pizzaState,
+  setPizzaState,
+}) => {
   return (
     <ul>
       {pizza.sizes.map((size) => (
@@ -18,7 +32,16 @@ const SizeSelector = ({ pizza, pizzaState, setPizzaState }) => {
   );
 };
 
-const TypeSelector = ({ pizza, pizzaState, setPizzaState, typeName }) => {
+interface TypeSelectorProps extends SizeSelectorProps {
+  typeName: string[];
+}
+
+const TypeSelector: React.FC<TypeSelectorProps> = ({
+  pizza,
+  pizzaState,
+  setPizzaState,
+  typeName,
+}) => {
   return (
     <ul>
       {pizza.types.map((type) => (
@@ -33,7 +56,7 @@ const TypeSelector = ({ pizza, pizzaState, setPizzaState, typeName }) => {
   );
 };
 
-const PizzaBlock = ({ pizza }) => {
+const PizzaBlock: React.FC<{ pizza: Ipizza }> = ({ pizza }) => {
   const [pizzaState, setPizzaState] = React.useState({
     type: pizza.types[0],
     size: pizza.sizes[0],

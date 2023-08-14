@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { greyArrowLeft } from '../assets';
+import { Ipizza } from 'types';
 
-const FullPizza = () => {
-  const [pizza, setPizza] = useState();
+const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = useState<Ipizza>();
   const { id } = useParams();
 
   useEffect(() => {
@@ -19,7 +20,7 @@ const FullPizza = () => {
       }
     }
     fetchPizza();
-  }, []);
+  }, [id]);
 
   if (!pizza) {
     return (
@@ -34,6 +35,7 @@ const FullPizza = () => {
       <Link to="/">
         <img width={10} src={greyArrowLeft} alt="back" />
       </Link>
+
       <div
         style={{
           display: 'flex',

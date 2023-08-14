@@ -1,6 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RootState } from 'redux/store';
+import { IFilter, Ipizza } from 'types';
 
-const initialState = {
+const initialState: IFilter = {
   searchValue: '',
   categoryId: 0,
   pageCount: 1,
@@ -14,7 +16,7 @@ export const filterSlice = createSlice({
   name: '@@filter',
   initialState,
   reducers: {
-    setCategoryId(state, action) {
+    setCategoryId(state, action: PayloadAction<Ipizza['category']>) {
       state.categoryId = action.payload;
     },
     setSort(state, action) {
@@ -30,11 +32,11 @@ export const filterSlice = createSlice({
       state.searchValue = action.payload;
     },
     setFilters(state, action) {
-      state.currentPage = Number(action.payload.currentPage);
+      state.pageCount = Number(action.payload.currentPage);
       state.categoryId = Number(action.payload.categoryId);
       state.sort = action.payload.sort;
     },
-    clearFilters(state, action) {
+    clearFilters(state) {
       state.searchValue = '';
       state.categoryId = 0;
       state.pageCount = 1;
@@ -44,7 +46,7 @@ export const filterSlice = createSlice({
   },
 });
 
-export const selectFilter = (state) => state.filter;
+export const selectFilter = (state: RootState) => state.filter;
 
 export default filterSlice.reducer;
 export const {

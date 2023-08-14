@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzaLoaderBlock = (props) => {
+const PizzaLoaderBlock = () => {
   return (
     <div className="pizza-block-wrapper">
       <ContentLoader
@@ -11,8 +11,7 @@ const PizzaLoaderBlock = (props) => {
         viewBox="0 0 260 465"
         backgroundColor="#f3f3f3"
         foregroundColor="#ecebeb"
-        style={{ marginBottom: 40 }}
-        {...props}>
+        style={{ marginBottom: 40 }}>
         <circle cx="126" cy="127" r="123" />
         <rect x="7" y="278" rx="5" ry="5" width="251" height="15" />
         <rect x="7" y="308" rx="5" ry="5" width="248" height="84" />

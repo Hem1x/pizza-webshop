@@ -1,20 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../components/CartItem';
 import { clearItems, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { ICartItem } from 'types';
 
-const Cart = () => {
-  const dispatch = useDispatch();
-  const { items } = useSelector(selectCart);
+const Cart: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { items }: { items: ICartItem[] } = useAppSelector(selectCart);
 
   // Total
-  const totalPrice = items.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.price * currentValue.count,
-    0,
-  );
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalPrice = items.reduce((sum, item) => sum + item.price * (item.count || 0), 0);
+  const totalCount = items.reduce((sum, item) => sum + (item.count || 0), 0);
+
+  const handleClick = () => {
+    dispatch(clearItems());
+  };
 
   return (
     <div className="container container--cart">
@@ -52,7 +54,7 @@ const Cart = () => {
               </svg>
               Корзина
             </h2>
-            <div className="cart__clear" onClick={() => dispatch(clearItems())}>
+            <div className="cart__clear" onClick={handleClick}>
               <svg
                 width="20"
                 height="20"

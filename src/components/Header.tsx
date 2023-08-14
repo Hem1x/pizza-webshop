@@ -2,18 +2,16 @@ import React from 'react';
 import { pizzaLogo } from '../assets';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search/Search';
-import { useDispatch, useSelector } from 'react-redux';
 import { selectCart } from '../redux/slices/cartSlice';
 import { clearFilters } from '../redux/slices/filterSlice';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { ICartItem } from 'types';
 
-const Header = () => {
-  const { items } = useSelector(selectCart);
-  const totalPrice = items.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.price * currentValue.count,
-    0,
-  );
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
-  const dispatch = useDispatch();
+const Header: React.FC = () => {
+  const { items }: { items: ICartItem[] } = useAppSelector(selectCart);
+  const totalPrice = items.reduce((sum, item) => sum + item.price * (item.count || 0), 0);
+  const totalCount = items.reduce((sum, item) => sum + (item.count || 0), 0);
+  const dispatch = useAppDispatch();
 
   const location = useLocation();
 

@@ -1,12 +1,17 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { setCategoryId, setPageCount } from '../redux/slices/filterSlice';
+import { Ipizza } from 'types';
+import { useAppDispatch } from 'redux/hooks';
 
-const Categories = ({ selectedCategory, setCurrentPage }) => {
+interface CategoriesProps {
+  selectedCategory: Ipizza['category'];
+}
+
+const Categories: React.FC<CategoriesProps> = ({ selectedCategory }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const clickHandler = (i) => {
+  const clickHandler = (i: Ipizza['category']) => {
     dispatch(setCategoryId(i));
     dispatch(setPageCount(1));
   };
