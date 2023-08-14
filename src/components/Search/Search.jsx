@@ -1,14 +1,22 @@
-import React, { useContext, useRef } from 'react';
-import { SearchContext } from '../../App';
+import React, { useRef, useState } from 'react';
 import s from './Search.module.scss';
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../redux/slices/filterSlice';
 
 const Search = () => {
-  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const dispatch = useDispatch();
+  const [value, setValue] = useState('');
   const inputRef = useRef();
 
   const onCLickClear = () => {
-    setSearchValue('');
+    dispatch(setSearchValue(''));
+    setValue('');
     inputRef.current.focus();
+  };
+
+  const handleOnChange = (e) => {
+    setValue(e.target.value);
+    dispatch(setSearchValue(value));
   };
 
   return (
@@ -31,10 +39,10 @@ const Search = () => {
         className={s.input}
         type="text"
         placeholder="Поиск пиццы..."
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)}
+        value={value}
+        onChange={handleOnChange}
       />
-      {searchValue.length !== 0 && (
+      {value.length !== 0 && (
         <svg
           onClick={onCLickClear}
           xmlns="http://www.w3.org/2000/svg"

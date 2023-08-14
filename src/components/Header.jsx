@@ -2,21 +2,24 @@ import React from 'react';
 import { pizzaLogo } from '../assets';
 import { Link } from 'react-router-dom';
 import Search from './Search/Search';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCart } from '../redux/slices/cartSlice';
+import { clearFilters } from '../redux/slices/filterSlice';
 
 const Header = () => {
-  const { items } = useSelector((state) => state.cart);
+  const { items } = useSelector(selectCart);
   const totalPrice = items.reduce(
     (accumulator, currentValue) => accumulator + currentValue.price * currentValue.count,
     0,
   );
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const dispatch = useDispatch();
 
   return (
     <div className="header">
       <div className="container">
         <Link to="/">
-          <div className="header__logo">
+          <div className="header__logo" onClick={() => dispatch(clearFilters())}>
             <img width="38" src={pizzaLogo} alt="Pizza logo" />
             <div>
               <h1>React Pizza</h1>
