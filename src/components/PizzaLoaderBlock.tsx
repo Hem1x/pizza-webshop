@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzaLoaderBlock = () => {
+const PizzaLoaderBlock: React.FC = () => {
   return (
     <div className="pizza-block-wrapper">
       <ContentLoader

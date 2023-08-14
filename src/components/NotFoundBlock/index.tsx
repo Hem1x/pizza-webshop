@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './NotFoundBlock.module.scss';
 
-const index = () => {
+const index: React.FC = () => {
   return (
     <div className={s.root}>
       <span>😓</span>

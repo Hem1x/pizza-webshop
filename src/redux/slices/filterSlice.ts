@@ -19,16 +19,16 @@ export const filterSlice = createSlice({
     setCategoryId(state, action: PayloadAction<Ipizza['category']>) {
       state.categoryId = action.payload;
     },
-    setSort(state, action) {
+    setSort(state, action: PayloadAction<{ name: string; sortProperty: string }>) {
       state.sort = {
         name: action.payload.name,
         sortProperty: action.payload.sortProperty,
       };
     },
-    setPageCount(state, action) {
+    setPageCount(state, action: PayloadAction<number>) {
       state.pageCount = action.payload;
     },
-    setSearchValue(state, action) {
+    setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
     },
     setFilters(state, action) {

@@ -3,7 +3,7 @@ import s from './Search.module.scss';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
 
-const Search = () => {
+const Search: React.FC = () => {
   const dispatch = useAppDispatch();
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);

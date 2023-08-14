@@ -28,9 +28,11 @@ const Home: React.FC = () => {
 
   const urlParams: IUrl = {
     categoryURL: categoryId !== 0 ? `category=${categoryId}&` : '',
-    sortURL: `sortBy=${sort.sortProperty.replace('-', '')}${
-      sort.sortProperty.startsWith('-') ? '&order=asc' : '&order=desc'
-    }`,
+    sortURL: sort
+      ? `sortBy=${sort.sortProperty.replace('-', '')}${
+          sort.sortProperty.startsWith('-') ? '&order=asc' : '&order=desc'
+        }`
+      : '',
     searchURL: debounced ? `search=${debounced}` : '',
     pageURL: categoryId === 0 ? `page=${pageCount}` : '',
   };

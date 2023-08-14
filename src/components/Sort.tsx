@@ -18,6 +18,10 @@ interface SortProps {
   sortType: ISort;
 }
 
+type PopupClick = MouseEvent & {
+  path: Node[];
+};
+
 const Sort: React.FC<SortProps> = ({ sortType }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
@@ -29,8 +33,9 @@ const Sort: React.FC<SortProps> = ({ sortType }) => {
   };
 
   useEffect(() => {
-    const hadleClickOutsite = (e: any) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const hadleClickOutsite = (e: MouseEvent) => {
+      const _e = e as PopupClick;
+      if (sortRef.current && !_e.composedPath().includes(sortRef.current)) {
         setIsOpen(false);
       }
     };
