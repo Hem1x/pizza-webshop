@@ -2,7 +2,7 @@ import React from 'react';
 import { emptyCart } from '../assets';
 import { Link } from 'react-router-dom';
 
-const CartEmpty: React.FC = () => {
+export const CartEmpty: React.FC = () => {
   return (
     <>
       <div className="content">
@@ -26,5 +26,3 @@ const CartEmpty: React.FC = () => {
     </>
   );
 };
-
-export default CartEmpty;

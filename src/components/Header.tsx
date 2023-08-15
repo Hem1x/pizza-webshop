@@ -1,13 +1,16 @@
-import React from 'react';
 import { pizzaLogo } from '../assets';
+
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Search from './Search/Search';
+
+import { ICartItem } from 'types';
+import { Search } from '../components';
+
 import { selectCart } from 'redux/slices/cart/cartSelectors';
 import { clearFilters } from '../redux/slices/filter/filterSlice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { ICartItem } from 'types';
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
   const { items }: { items: ICartItem[] } = useAppSelector(selectCart);
   const totalPrice = items.reduce((sum, item) => sum + item.price * (item.count || 0), 0);
   const totalCount = items.reduce((sum, item) => sum + (item.count || 0), 0);
@@ -108,5 +111,3 @@ const Header: React.FC = () => {
     </div>
   );
 };
-
-export default Header;

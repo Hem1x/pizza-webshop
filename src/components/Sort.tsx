@@ -18,7 +18,7 @@ type PopupClick = MouseEvent & {
   path: Node[];
 };
 
-const Sort: React.FC<SortProps> = React.memo(({ sortType }) => {
+export const Sort: React.FC<SortProps> = React.memo(({ sortType }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
@@ -66,5 +66,3 @@ const Sort: React.FC<SortProps> = React.memo(({ sortType }) => {
     </div>
   );
 });
-
-export default Sort;

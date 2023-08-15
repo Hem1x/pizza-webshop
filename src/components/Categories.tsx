@@ -7,7 +7,7 @@ interface CategoriesProps {
   selectedCategory: Ipizza['category'];
 }
 
-const Categories: React.FC<CategoriesProps> = React.memo(({ selectedCategory }) => {
+export const Categories: React.FC<CategoriesProps> = React.memo(({ selectedCategory }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
   const dispatch = useAppDispatch();
 
@@ -31,5 +31,3 @@ const Categories: React.FC<CategoriesProps> = React.memo(({ selectedCategory }) 
     </div>
   );
 });
-
-export default Categories;

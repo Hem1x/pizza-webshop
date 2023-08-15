@@ -7,7 +7,7 @@ interface CartItemProps {
   cartItem: ICartItem;
 }
 
-const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
+export const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
   const dispatch = useAppDispatch();
   return (
     <div className="cart__item">
@@ -103,5 +103,3 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem }) => {
     </div>
   );
 };
-
-export default CartItem;

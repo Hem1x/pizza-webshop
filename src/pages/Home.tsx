@@ -2,16 +2,14 @@ import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import Categories from '../components/Categories';
-import Sort, { sortTypeList } from '../components/Sort';
-import PizzaLoaderBlock from '../components/PizzaLoaderBlock';
-import PizzaBlock from '../components/PizzaBlock';
-import Pagination from '../components/Pagination/Pagination';
+import { sortTypeList } from '../components/Sort';
+import { Sort, Categories, PizzaLoaderBlock, PizzaBlock, Pagination } from '../components';
 
 import { useDebounce } from '../hooks/debounce';
-import { setFilters } from '../redux/slices/filter/filterSlice';
 import { IUrl, Ipizza } from 'types';
+
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setFilters } from '../redux/slices/filter/filterSlice';
 import { selectFilter } from 'redux/slices/filter/filterSelectors';
 import { selectPizzas } from 'redux/slices/pizza/pizzaSelectors';
 import { getPizzas } from 'redux/slices/pizza/pizzaAsync';

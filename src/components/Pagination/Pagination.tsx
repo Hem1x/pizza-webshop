@@ -4,7 +4,7 @@ import ReactPaginate from 'react-paginate';
 import { useAppDispatch } from 'redux/hooks';
 import { setPageCount } from 'redux/slices/filter/filterSlice';
 
-const Pagination: React.FC = () => {
+export const Pagination: React.FC = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -20,5 +20,3 @@ const Pagination: React.FC = () => {
     />
   );
 };
-
-export default Pagination;

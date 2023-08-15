@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const PizzaLoaderBlock: React.FC = () => (
+export const PizzaLoaderBlock: React.FC = () => (
   <div className="pizza-block-wrapper">
     <ContentLoader
       speed={2}
@@ -20,5 +20,3 @@ const PizzaLoaderBlock: React.FC = () => (
     </ContentLoader>
   </div>
 );
-
-export default PizzaLoaderBlock;

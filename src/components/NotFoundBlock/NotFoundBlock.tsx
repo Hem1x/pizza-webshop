@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './NotFoundBlock.module.scss';
 
-const index: React.FC = () => {
+export const NotFoundBlock: React.FC = () => {
   return (
     <div className={s.root}>
       <span>😓</span>
@@ -11,5 +11,3 @@ const index: React.FC = () => {
     </div>
   );
 };
-
-export default index;

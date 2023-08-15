@@ -53,7 +53,7 @@ const TypeSelector: React.FC<TypeSelectorProps> = ({
   );
 };
 
-const PizzaBlock: React.FC<{ pizza: Ipizza }> = ({ pizza }) => {
+export const PizzaBlock: React.FC<{ pizza: Ipizza }> = ({ pizza }) => {
   const [pizzaState, setPizzaState] = React.useState({
     type: pizza.types[0],
     size: pizza.sizes[0],
@@ -115,5 +115,3 @@ const PizzaBlock: React.FC<{ pizza: Ipizza }> = ({ pizza }) => {
     </div>
   );
 };
-
-export default PizzaBlock;

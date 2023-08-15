@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
-import Header from './components/Header';
+import { Header } from './components';
 import Home from './pages/Home';
 
 const Cart = React.lazy(() => import('./pages/Cart'));
