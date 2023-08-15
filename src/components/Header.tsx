@@ -11,6 +11,7 @@ const Header: React.FC = () => {
   const { items }: { items: ICartItem[] } = useAppSelector(selectCart);
   const totalPrice = items.reduce((sum, item) => sum + item.price * (item.count || 0), 0);
   const totalCount = items.reduce((sum, item) => sum + (item.count || 0), 0);
+
   const dispatch = useAppDispatch();
 
   const location = useLocation();

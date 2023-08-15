@@ -2,10 +2,15 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
 import Header from './components/Header';
-import NotFound from './pages/NotFound';
 import Home from './pages/Home';
-import Cart from './pages/Cart';
-import FullPizza from './pages/FullPizza';
+
+const Cart = React.lazy(() => import('./pages/Cart'));
+const FullPizza = React.lazy(() => import('./pages/FullPizza'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+
+const Loader: React.FC = () => (
+  <div style={{ display: 'flex', justifyContent: 'center' }}>Загрузка...</div>
+);
 
 const App: React.FC = () => {
   return (
@@ -14,9 +19,30 @@ const App: React.FC = () => {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/pizza/:id" element={<FullPizza />} />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/cart"
+            element={
+              <React.Suspense fallback={<Loader />}>
+                <Cart />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="/pizza/:id"
+            element={
+              <React.Suspense>
+                <FullPizza />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <React.Suspense fallback={<Loader />}>
+                <NotFound />
+              </React.Suspense>
+            }
+          />
         </Routes>
       </div>
     </div>
