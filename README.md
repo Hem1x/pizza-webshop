@@ -2,6 +2,10 @@
 
 Веб-приложение, созданное с использованием технологий TypeScript, React и Redux Toolkit. Приложение предоставляет пользователям возможность выбирать и заказывать различные виды пиццы онлайн.
 
+## Демо
+
+![Animated GIF](./demo.png)
+
 ## Технологии
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=Typescript)
@@ -32,5 +36,5 @@ npm start
 ```
 
 ## Ссылка на проект
-https://pizza-webshop-pcq1eflkz-hem1x.vercel.app/
 
+https://pizza-webshop-pcq1eflkz-hem1x.vercel.app/
