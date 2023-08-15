@@ -37,4 +37,4 @@ npm start
 
 ## Ссылка на проект
 
-https://pizza-webshop-pcq1eflkz-hem1x.vercel.app/
+https://pizza-webshop-chi.vercel.app/
