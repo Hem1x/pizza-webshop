@@ -1,7 +1,16 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { AnyAction, Dispatch, Middleware, combineReducers, configureStore } from '@reduxjs/toolkit';
 import filterReducer from './slices/filterSlice';
 import cartReducer from './slices/cartSlice';
 import pizzaReducer from './slices/pizzaSlice';
+
+const localStorageMiddleware: Middleware =
+  (store) => (next: Dispatch<AnyAction>) => (action: AnyAction) => {
+    next(action);
+    localStorage.setItem('reduxState', JSON.stringify(store.getState()));
+  };
+
+const savedState = localStorage.getItem('reduxState');
+const preloadedState = savedState ? JSON.parse(savedState) : undefined;
 
 const rootReducer = combineReducers({
   filter: filterReducer,
@@ -11,8 +20,9 @@ const rootReducer = combineReducers({
 
 export const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(localStorageMiddleware),
+  preloadedState,
   devTools: true,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

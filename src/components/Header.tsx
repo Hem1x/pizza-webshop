@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { pizzaLogo } from '../assets';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search/Search';
