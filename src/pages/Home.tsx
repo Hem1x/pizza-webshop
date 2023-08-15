@@ -26,6 +26,7 @@ const Home: React.FC = () => {
 
   const debounced = useDebounce(searchValue, 500);
 
+  // URL
   const urlParams: IUrl = {
     categoryURL: categoryId !== 0 ? `category=${categoryId}&` : '',
     sortURL: sort
@@ -37,6 +38,7 @@ const Home: React.FC = () => {
     pageURL: categoryId === 0 ? `page=${pageCount}` : '',
   };
 
+  // Fetch PIZZA
   const fetchPizzas = async () => {
     try {
       dispatch(getPizzas(urlParams));
@@ -44,21 +46,26 @@ const Home: React.FC = () => {
       console.log((error as Error).message);
     }
 
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   };
 
+  // Parse URL
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      const sortProperty = params.sortProperty as string | undefined;
+
+      const sortProperty = params.sort as string | undefined;
+      const pageCount = Number(params.pageCount);
+      const categoryId = Number(params.categoryId);
+
       const sort = sortTypeList.find((obj) => obj.sortProperty === sortProperty);
 
       if (sort) {
-        dispatch(setFilters({ ...params, sort }));
+        dispatch(setFilters({ sort, categoryId, pageCount }));
         isSearch.current = true;
       }
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (!isSearch.current) {
@@ -71,9 +78,9 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
-        sort: sort?.sortProperty,
-        category: categoryId,
-        page: pageCount,
+        sort: sort.sortProperty,
+        categoryId,
+        pageCount,
       });
 
       navigate(`?${queryString}`);
@@ -82,9 +89,7 @@ const Home: React.FC = () => {
   }, [debounced, categoryId, sort.sortProperty, pageCount, navigate]);
 
   const skeletons = [...new Array(8)].map((item, i) => <PizzaLoaderBlock key={i} />);
-  const pizzasList = pizzas.map((pizza: Ipizza) => (
-    <PizzaBlock key={pizza.id} pizza={pizza} />
-  ));
+  const pizzasList = pizzas.map((pizza: Ipizza) => <PizzaBlock key={pizza.id} pizza={pizza} />);
 
   return (
     <div className="container">

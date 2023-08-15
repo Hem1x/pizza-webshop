@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'redux/store';
-import { IFilter, Ipizza } from 'types';
+import { IFilter, ISort, Ipizza, SortTypeEnum } from 'types';
 
 const initialState: IFilter = {
   searchValue: '',
@@ -8,7 +8,7 @@ const initialState: IFilter = {
   pageCount: 1,
   sort: {
     name: 'популярности',
-    sortProperty: 'rating',
+    sortProperty: SortTypeEnum.RATING,
   },
 };
 
@@ -19,7 +19,7 @@ export const filterSlice = createSlice({
     setCategoryId(state, action: PayloadAction<Ipizza['category']>) {
       state.categoryId = action.payload;
     },
-    setSort(state, action: PayloadAction<{ name: string; sortProperty: string }>) {
+    setSort(state, action: PayloadAction<ISort>) {
       state.sort = {
         name: action.payload.name,
         sortProperty: action.payload.sortProperty,
@@ -31,17 +31,17 @@ export const filterSlice = createSlice({
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
     },
-    setFilters(state, action) {
-      state.pageCount = Number(action.payload.currentPage);
-      state.categoryId = Number(action.payload.categoryId);
+    setFilters(state, action: PayloadAction<Omit<IFilter, 'searchValue'>>) {
+      state.pageCount = action.payload.pageCount;
+      state.categoryId = action.payload.categoryId;
       state.sort = action.payload.sort;
     },
     clearFilters(state) {
       state.searchValue = '';
       state.categoryId = 0;
       state.pageCount = 1;
-      state.sort['name'] = 'популярности';
-      state.sort['sortProperty'] = 'rating';
+      state.sort.name = 'популярности';
+      state.sort.sortProperty = SortTypeEnum.RATING;
     },
   },
 });
@@ -49,11 +49,5 @@ export const filterSlice = createSlice({
 export const selectFilter = (state: RootState) => state.filter;
 
 export default filterSlice.reducer;
-export const {
-  setCategoryId,
-  setSort,
-  setPageCount,
-  setFilters,
-  setSearchValue,
-  clearFilters,
-} = filterSlice.actions;
+export const { setCategoryId, setSort, setPageCount, setFilters, setSearchValue, clearFilters } =
+  filterSlice.actions;

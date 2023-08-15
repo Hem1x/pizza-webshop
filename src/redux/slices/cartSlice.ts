@@ -20,9 +20,7 @@ export const cartSlice = createSlice({
       }
     },
     removeItem(state, action: PayloadAction<Pick<ICartItem, 'id' | 'price'>>) {
-      state.items = state.items.filter(
-        (item: ICartItem) => item.id !== action.payload.id,
-      );
+      state.items = state.items.filter((item: ICartItem) => item.id !== action.payload.id);
     },
     clearItems(state) {
       state.items = [];
@@ -32,12 +30,6 @@ export const cartSlice = createSlice({
 
       if (findItem?.count) {
         findItem.count--;
-
-        if (findItem.count === 0) {
-          state.items = state.items.filter(
-            (item: ICartItem) => item.id !== action.payload,
-          );
-        }
       }
     },
   },

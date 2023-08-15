@@ -27,12 +27,19 @@ export interface IUrl {
   pageURL: string;
 }
 
+export enum SortTypeEnum {
+  RATING = 'rating',
+  TITLE = 'title',
+  PRICE_DESC = 'price',
+  PRICE_ASC = '-price',
+}
+export interface ISort {
+  name: string;
+  sortProperty: SortTypeEnum;
+}
 export interface IFilter {
   searchValue: string;
   categoryId: number;
   pageCount: number;
-  sort: {
-    name: string;
-    sortProperty: string;
-  };
+  sort: ISort;
 }

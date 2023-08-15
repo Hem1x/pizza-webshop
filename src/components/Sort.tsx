@@ -1,18 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { setSort } from '../redux/slices/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
+import { ISort, SortTypeEnum } from 'types';
 
-export const sortTypeList = [
-  { name: 'популярности', sortProperty: 'rating' },
-  { name: 'алфавиту (А-Я)', sortProperty: 'title' },
-  { name: 'цене (сначала дорогие)', sortProperty: 'price' },
-  { name: 'цене (сначала дешёвые)', sortProperty: '-price' },
+export const sortTypeList: ISort[] = [
+  { name: 'популярности', sortProperty: SortTypeEnum.RATING },
+  { name: 'алфавиту (А-Я)', sortProperty: SortTypeEnum.TITLE },
+  { name: 'цене (сначала дорогие)', sortProperty: SortTypeEnum.PRICE_DESC },
+  { name: 'цене (сначала дешёвые)', sortProperty: SortTypeEnum.PRICE_ASC },
 ];
-
-interface ISort {
-  name: string;
-  sortProperty: string;
-}
 
 interface SortProps {
   sortType: ISort;
@@ -22,7 +18,7 @@ type PopupClick = MouseEvent & {
   path: Node[];
 };
 
-const Sort: React.FC<SortProps> = ({ sortType }) => {
+const Sort: React.FC<SortProps> = React.memo(({ sortType }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useAppDispatch();
   const sortRef = useRef<HTMLDivElement>(null);
@@ -69,6 +65,6 @@ const Sort: React.FC<SortProps> = ({ sortType }) => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

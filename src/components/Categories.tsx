@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Profiler, useCallback } from 'react';
 import { setCategoryId, setPageCount } from '../redux/slices/filterSlice';
 import { Ipizza } from 'types';
 import { useAppDispatch } from 'redux/hooks';
+import { useWhyDidYouUpdate } from 'ahooks';
 
 interface CategoriesProps {
   selectedCategory: Ipizza['category'];
 }
 
-const Categories: React.FC<CategoriesProps> = ({ selectedCategory }) => {
+const Categories: React.FC<CategoriesProps> = React.memo(({ selectedCategory }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острая', 'Закрытая'];
   const dispatch = useAppDispatch();
 
@@ -30,6 +31,6 @@ const Categories: React.FC<CategoriesProps> = ({ selectedCategory }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

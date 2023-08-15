@@ -14,6 +14,11 @@ export const getPizzas = createAsyncThunk<Ipizza[], IUrl>(
   },
 );
 
+enum StatusEnum {
+  LOADING = 'loading',
+  SUCCESS = 'success',
+  ERROR = 'error',
+}
 interface PizzaState {
   pizzas: Ipizza[];
   status: string;
@@ -21,7 +26,7 @@ interface PizzaState {
 
 const initialState: PizzaState = {
   pizzas: [],
-  status: 'loading',
+  status: StatusEnum.LOADING,
 };
 
 export const pizzaSlice = createSlice({
@@ -35,15 +40,15 @@ export const pizzaSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getPizzas.fulfilled, (state, action: PayloadAction<Ipizza[]>) => {
-        state.status = 'success';
+        state.status = StatusEnum.SUCCESS;
         state.pizzas = action.payload;
       })
       .addCase(getPizzas.pending, (state) => {
-        state.status = 'loading';
+        state.status = StatusEnum.LOADING;
         state.pizzas = [];
       })
       .addCase(getPizzas.rejected, (state) => {
-        state.status = 'error';
+        state.status = StatusEnum.ERROR;
         state.pizzas = [];
       });
   },
