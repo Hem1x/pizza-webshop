@@ -146,7 +146,7 @@ body {
 
   &__item {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-wrap: wrap;
     max-width: 100%;
     border-top: 1px solid $gray-line;
