@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { setSort } from '../redux/slices/filterSlice';
+import { setSort } from '../redux/slices/filter/filterSlice';
 import { useAppDispatch } from 'redux/hooks';
 import { ISort, SortTypeEnum } from 'types';
 

@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ICartItem, Ipizza } from 'types';
-import { RootState } from 'redux/store';
+import { ICartItem } from 'types';
 
 const initialState: { items: ICartItem[] } = {
   items: [],
@@ -34,10 +33,6 @@ export const cartSlice = createSlice({
     },
   },
 });
-
-export const selectCart = (state: RootState) => state.cart;
-export const selectCartById = (pizza: Ipizza) => (state: RootState) =>
-  state.cart.items.find((obj: ICartItem) => obj.id === pizza.id);
 
 export default cartSlice.reducer;
 export const { addItem, removeItem, clearItems, decreaseAmount } = cartSlice.actions;

@@ -1,7 +1,7 @@
 import { AnyAction, Dispatch, Middleware, combineReducers, configureStore } from '@reduxjs/toolkit';
-import filterReducer from './slices/filterSlice';
-import cartReducer from './slices/cartSlice';
-import pizzaReducer from './slices/pizzaSlice';
+import filterReducer from './slices/filter/filterSlice';
+import cartReducer from './slices/cart/cartSlice';
+import pizzaReducer from './slices/pizza/pizzaSlice';
 
 const localStorageMiddleware: Middleware =
   (store) => (next: Dispatch<AnyAction>) => (action: AnyAction) => {

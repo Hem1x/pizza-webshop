@@ -1,8 +1,7 @@
-import React, { Profiler, useCallback } from 'react';
-import { setCategoryId, setPageCount } from '../redux/slices/filterSlice';
+import React from 'react';
+import { setCategoryId, setPageCount } from '../redux/slices/filter/filterSlice';
 import { Ipizza } from 'types';
 import { useAppDispatch } from 'redux/hooks';
-import { useWhyDidYouUpdate } from 'ahooks';
 
 interface CategoriesProps {
   selectedCategory: Ipizza['category'];

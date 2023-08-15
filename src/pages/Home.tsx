@@ -9,10 +9,12 @@ import PizzaBlock from '../components/PizzaBlock';
 import Pagination from '../components/Pagination/Pagination';
 
 import { useDebounce } from '../hooks/debounce';
-import { selectFilter, setFilters } from '../redux/slices/filterSlice';
-import { getPizzas, selectPizzas } from '../redux/slices/pizzaSlice';
+import { setFilters } from '../redux/slices/filter/filterSlice';
 import { IUrl, Ipizza } from 'types';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { selectFilter } from 'redux/slices/filter/filterSelectors';
+import { selectPizzas } from 'redux/slices/pizza/pizzaSelectors';
+import { getPizzas } from 'redux/slices/pizza/pizzaAsync';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();

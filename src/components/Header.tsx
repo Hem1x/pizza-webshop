@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { pizzaLogo } from '../assets';
 import { Link, useLocation } from 'react-router-dom';
 import Search from './Search/Search';
-import { selectCart } from '../redux/slices/cartSlice';
-import { clearFilters } from '../redux/slices/filterSlice';
+import { selectCart } from 'redux/slices/cart/cartSelectors';
+import { clearFilters } from '../redux/slices/filter/filterSlice';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { ICartItem } from 'types';
 

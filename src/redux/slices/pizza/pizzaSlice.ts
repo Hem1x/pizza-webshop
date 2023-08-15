@@ -1,18 +1,6 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { RootState } from 'redux/store';
-import { IUrl, Ipizza } from 'types';
-
-export const getPizzas = createAsyncThunk<Ipizza[], IUrl>(
-  'pizza/fetchPizzasStatus',
-  async (params: IUrl) => {
-    const { categoryURL, sortURL, searchURL, pageURL } = params;
-    const { data } = await axios.get<Ipizza[]>(
-      `https://64b519e9f3dbab5a95c6b423.mockapi.io/pizza?${pageURL}&limit=4&${categoryURL}${sortURL}&${searchURL}`,
-    );
-    return data;
-  },
-);
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { Ipizza } from 'types';
+import { getPizzas } from './pizzaAsync';
 
 enum StatusEnum {
   LOADING = 'loading',
@@ -53,8 +41,6 @@ export const pizzaSlice = createSlice({
       });
   },
 });
-
-export const selectPizzas = (state: RootState) => state.pizza;
 
 export default pizzaSlice.reducer;
 export const { setPizzas } = pizzaSlice.actions;

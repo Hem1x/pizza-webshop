@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { RootState } from 'redux/store';
 import { IFilter, ISort, Ipizza, SortTypeEnum } from 'types';
 
 const initialState: IFilter = {
@@ -45,8 +44,6 @@ export const filterSlice = createSlice({
     },
   },
 });
-
-export const selectFilter = (state: RootState) => state.filter;
 
 export default filterSlice.reducer;
 export const { setCategoryId, setSort, setPageCount, setFilters, setSearchValue, clearFilters } =

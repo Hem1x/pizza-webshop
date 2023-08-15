@@ -1,5 +1,5 @@
 import React from 'react';
-import { addItem, decreaseAmount, removeItem } from '../redux/slices/cartSlice';
+import { addItem, decreaseAmount, removeItem } from '../redux/slices/cart/cartSlice';
 import { useAppDispatch } from 'redux/hooks';
 import { ICartItem } from 'types';
 

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, selectCartById } from '../redux/slices/cartSlice';
+import { addItem } from '../redux/slices/cart/cartSlice';
 import { Link } from 'react-router-dom';
 import { Ipizza } from 'types';
+import { selectCartById } from 'redux/slices/cart/cartSelectors';
 
 interface SizeSelectorProps {
   pizza: Ipizza;
@@ -13,11 +14,7 @@ interface SizeSelectorProps {
   setPizzaState: (update: { type: number; size: number }) => void;
 }
 
-const SizeSelector: React.FC<SizeSelectorProps> = ({
-  pizza,
-  pizzaState,
-  setPizzaState,
-}) => {
+const SizeSelector: React.FC<SizeSelectorProps> = ({ pizza, pizzaState, setPizzaState }) => {
   return (
     <ul>
       {pizza.sizes.map((size) => (
@@ -88,11 +85,7 @@ const PizzaBlock: React.FC<{ pizza: Ipizza }> = ({ pizza }) => {
           <h4 className="pizza-block__title">{pizza.title}</h4>
         </Link>
         <div className="pizza-block__selector">
-          <SizeSelector
-            pizza={pizza}
-            pizzaState={pizzaState}
-            setPizzaState={setPizzaState}
-          />
+          <SizeSelector pizza={pizza} pizzaState={pizzaState} setPizzaState={setPizzaState} />
           <TypeSelector
             pizza={pizza}
             pizzaState={pizzaState}
