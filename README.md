@@ -8,10 +8,26 @@
 
 ## Технологии
 
-![TypeScript](https://img.shields.io/badge/TypeScript-000?style=for-the-badge&logo=Typescript)
-![React](https://img.shields.io/badge/React-000?style=for-the-badge&logo=react)
-![Redux](https://img.shields.io/badge/Redux-000?style=for-the-badge&logo=redux)
-![SASS](https://img.shields.io/badge/SASS-000?style=for-the-badge&logo=SASS)
+<table width='100%'>
+  <tr>
+    <td align="center" width="110" height="90">
+      <img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/typescript/typescript-original.svg" width="36" height="36" alt="typescript" />
+      <br>Typescript
+   </td>
+   <td align="center" width="110" height="90">
+      <img src="https://brandlogos.net/wp-content/uploads/2020/09/react-logo.png" width="36" height="36" alt="React" />
+      <br>React JS
+    </td>
+    <td align="center" width="110" height="90">
+      <img src="https://cdn.worldvectorlogo.com/logos/redux.svg" width="36" height="36" alt="Redux" />
+      <br>Redux
+    </td>
+    <td align="center" width="110" height="90">
+      <img src="https://brandeps.com/icon-download/S/Sass-icon-vector-04.svg" width="36" height="36" alt="Sass" />
+      <br>Sass
+    </td>
+  </tr> 
+</table>
 
 ## Запуск проекта
 
